@@ -23,3 +23,4 @@ See the [kibana contributing guide](https://github.com/elastic/kibana/blob/maste
 </dl>
 
 For more information about any of these commands run `npm run ${task} -- --help`.
+# TestPlugin
