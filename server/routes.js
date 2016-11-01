@@ -7,7 +7,8 @@ export default function (server) {
   // Register a GET API at /api/elasticsearch_status/indices that returns
   // an array of all indices in the elasticsearch. The server is actually an
   // HAPI server and the complete documentation of the "route" method can be
-  // found in the official documentation: http://hapijs.com/api#serverrouteoptions
+  // found in the official documentation:
+	// http://hapijs.com/api#serverrouteoptions
   server.route({
     path: '/api/elasticsearch_status/indices',
     method: 'GET',
@@ -24,9 +25,12 @@ export default function (server) {
       // Second parameter to the function is the name of the javascript method
       // you would like to call, as you can find it here in the documentation:
       // https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/
-      // The third parameter will be passed as a parameter to the javascript method
-      // (it should contain the data you would have also passed to the client directly).
-      // The method returns a promise, which will be resolved with the data returned
+      // The third parameter will be passed as a parameter to the javascript
+		// method
+      // (it should contain the data you would have also passed to the client
+		// directly).
+      // The method returns a promise, which will be resolved with the data
+		// returned
       // from Elasticsearch.
       call(req, 'cluster.state').then(function (response) {
         // Return just the names of all indices to the client.
@@ -52,5 +56,56 @@ export default function (server) {
       });
     }
   });
-
+  
+  server.route({
+	    path: '/api/elasticsearch_status/test',
+	    method: 'GET',
+	    handler(req, reply) {
+	      call(req, 'cluster.state', {
+	          metric: 'metadata',
+	          index: req.params.name
+	        }).then(function (response) {
+	        reply(
+	       (response.metadata.templates["makelogs_index_template__logstash-"])
+	       // (response.metadata.templates["makelogs_index_template__logstash-"].settings)
+	        );
+	      });
+	    }
+	  });
+  
+//list of templates? (doing no object.keys gets a template named logstash-*)
+  /*
+  server.route({
+	    path: '/api/elasticsearch_status/test',
+	    method: 'GET',
+	    handler(req, reply) {
+	      call(req, 'cluster.state', {
+	          metric: 'metadata',
+	          index: req.params.name
+	        }).then(function (response) {
+	        reply(
+	       Object.keys(response.metadata.templates)
+	        );
+	      });
+	    }
+	  });
+  */
+  //mapping data for logstash-0
+  /*
+  server.route({
+	    path: '/api/elasticsearch_status/test',
+	    method: 'GET',
+	    handler(req, reply) {
+	      call(req, 'cluster.state', {
+	          metric: 'metadata',
+	          index: req.params.name
+	        }).then(function (response) {
+	        reply(
+	         (response.metadata.indices["logstash-0"].mappings)
+	        );
+	      });
+	    }
+	  });
+	  */
+  
 };

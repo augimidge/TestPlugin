@@ -31,14 +31,9 @@ uiModules
   $scope.title = 'Augi Testplugin';
   $scope.description = 'buhahahahah';
   
-  
-  
-  $scope.index = "logstash-0";
-
-   $http.get(`../api/elasticsearch_status/index/${this.index}`).then((response) => {
-     $scope.status = response.data;
-   });
-  
+   $http.get(`../api/elasticsearch_status/test`).then((response) => {
+	     $scope.test = response.data;
+	   });
   
   
   
