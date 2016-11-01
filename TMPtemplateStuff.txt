@@ -1,0 +1,111 @@
+{
+  "makelogs_index_template__logstash-": {
+    "order": 0,
+    "template": "logstash-*",
+    "settings": {
+      "index": {
+        "analysis": {
+          "analyzer": {
+            "makelogs_url": {
+              "type": "standard",
+              "max_token_length": "1000",
+              "tokenizer": "uax_url_email"
+            }
+          }
+        },
+        "number_of_shards": "1",
+        "number_of_replicas": "0"
+      }
+    },
+    "mappings": {
+      "_default_": {
+        "dynamic_templates": [
+          {
+            "string_fields": {
+              "mapping": {
+                "index": "analyzed",
+                "omit_norms": true,
+                "type": "string",
+                "fields": {
+                  "raw": {
+                    "index": "not_analyzed",
+                    "type": "string",
+                    "doc_values": true
+                  }
+                },
+                "doc_values": false
+              },
+              "match_mapping_type": "string",
+              "match": "*"
+            }
+          }
+        ],
+        "properties": {
+          "geo": {
+            "properties": {
+              "srcdest": {
+                "index": "not_analyzed",
+                "type": "string"
+              },
+              "src": {
+                "index": "not_analyzed",
+                "type": "string"
+              },
+              "coordinates": {
+                "type": "geo_point"
+              },
+              "dest": {
+                "index": "not_analyzed",
+                "type": "string"
+              }
+            }
+          },
+          "referer": {
+            "index": "not_analyzed",
+            "type": "string"
+          },
+          "@timestamp": {
+            "type": "date"
+          },
+          "memory": {
+            "type": "double"
+          },
+          "meta": {
+            "properties": {
+              "related": {
+                "type": "string"
+              },
+              "char": {
+                "index": "not_analyzed",
+                "type": "string"
+              },
+              "user": {
+                "properties": {
+                  "firstname": {
+                    "type": "string"
+                  },
+                  "lastname": {
+                    "index": "true",
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "clientip": {
+            "type": "ip"
+          },
+          "ip": {
+            "type": "ip"
+          },
+          "id": {
+            "include_in_all": false,
+            "index": "true",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "aliases": {}
+  }
+}

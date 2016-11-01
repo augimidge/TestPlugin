@@ -5,9 +5,22 @@
         <h2>Congratulations</h2>
         <p class="lead">You've successfully created your first Kibana Plugin!</p>
       </div>
+      <div>
+      <input type="text" ng-model="title" />
+      <br />
+      </div>
       <h1>{{ title }}</h1>
       <p class="lead">{{ description }}</p>
       <p>The current time is {{ currentTime }}</p>
+      <br />
+    </div>
+    
+    
+<div class="container">
+  <div class="row">
+    <div class="col-12-sm">
+      <h1>Index: {{ index }}</h1>
+			<pre>{{ status | json }}</pre>
     </div>
   </div>
 </div>

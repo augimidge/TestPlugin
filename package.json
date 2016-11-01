@@ -1,6 +1,6 @@
 {
   "name": "augi_testplugin",
-  "version": "0.0.0",
+  "version": "5.1.0",
   "description": "firstplugin",
   "main": "index.js",
   "scripts": {

@@ -9,27 +9,52 @@ import template from './templates/index.html';
 
 uiRoutes.enable();
 uiRoutes
-.when('/', {
-  template,
-  resolve: {
-    currentTime($http) {
-      return $http.get('../api/augi_testplugin/example').then(function (resp) {
-        return resp.data.time;
-      });
-    }
-  }
+.when('/',
+	{
+	template,
+	resolve:
+		{
+		currentTime($http)
+			{
+			return $http.get('../api/augi_testplugin/example').then(function (resp) {
+				return resp.data.time;
+			});
+		}
+	}
 });
 
 uiModules
 .get('app/augi_testplugin', [])
-.controller('augiTestpluginHelloWorld', function ($scope, $route, $interval) {
-  $scope.title = 'Augi Testplugin';
-  $scope.description = 'firstplugin';
 
+
+.controller('augiTestpluginHelloWorld', function ($scope, $route, $interval,$http) {
+  $scope.title = 'Augi Testplugin';
+  $scope.description = 'buhahahahah';
+  
+  
+  
+  $scope.index = "logstash-0";
+
+   $http.get(`../api/elasticsearch_status/index/${this.index}`).then((response) => {
+     $scope.status = response.data;
+   });
+  
+  
+  
+  
+  $http.get('../api/elasticsearch_status/indices').then((response) => {
+	   $scope.title = response.data;
+  });
+	    
+  $http.get(`../api/elasticsearch_status/index/logstash-0`).then((response) => {
+	  $scope.description = response.data;
+	  });
+  
   var currentTime = moment($route.current.locals.currentTime);
   $scope.currentTime = currentTime.format('HH:mm:ss');
   var unsubscribe = $interval(function () {
-    $scope.currentTime = currentTime.add(1, 'second').format('HH:mm:ss');
+    $scope.currentTime = currentTime.add(1337, 'second').format('HH:mm:ss');
   }, 1000);
+
   $scope.$watch('$destroy', unsubscribe);
-});
+})

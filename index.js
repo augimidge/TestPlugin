@@ -1,4 +1,5 @@
 import exampleRoute from './server/routes/example';
+import api from './server/routes';
 
 export default function (kibana) {
   return new kibana.Plugin({
@@ -29,6 +30,7 @@ export default function (kibana) {
     init(server, options) {
       // Add server routes and initalize the plugin here
       exampleRoute(server);
+      api(server);
     }
     
 
