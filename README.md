@@ -2,9 +2,10 @@
 
 > firstplugin
 
+Yeoman Generator generated most of the stuff here> 
 ---
 
-## Yeoman Generator generated most of the stuff here> development
+## development
 
 See the [kibana contributing guide](https://github.com/elastic/kibana/blob/master/CONTRIBUTING.md) for instructions setting up your development environment. Once you have completed that, use the following npm tasks.
 
